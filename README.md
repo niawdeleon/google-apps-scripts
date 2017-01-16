@@ -5,5 +5,5 @@ Various Google Apps Utility Scripts
 
 While you can use Gmail's Download All Attachments for more typical attachments, there's no such functionality if the attachments are embedded images, and you can't use it for multiple threads. That's why I wrote this little script to help me do that.
 
-The function saveStarredAttachments() saves all the attachments of starred threads in gmail to the root folder of your Google Drive with the name downloadAllAttachments.zip.
+This is currently published as a webapp at https://script.google.com/macros/d/10ng0V8HR88bM5syQWR7fz_gHrkSsxTnXaemSG3sxbvrYU8J8wk7PuPtO/edit?splash=yes
 
