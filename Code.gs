@@ -1,7 +1,7 @@
-function saveStarredAttachments() {
+function getAttachmentsFromStarredThreads() {
   // max 10 threads
-  var starredThreads = GmailApp.getStarredThreads(0, 10);
   var blobs = [];
+  var starredThreads = GmailApp.getStarredThreads(0, 10);
   var attachmentNumber = 0;
   
   // iterate over starred threads
@@ -21,21 +21,17 @@ function saveStarredAttachments() {
     }
   }
   
-  if (blobs.length == 0) {
-    return "No attachments.";
-  }
-  
-  var zip = Utilities.zip(blobs, "downloadAttachments.zip");  
-  DriveApp.addFile(DriveApp.createFile(zip));
-  
-  return "Successfully saved attachments of starred images to your Google Drive.";
+  return blobs;
 }
 
 function doGet(e) { 
-  // um, this doesn't work when ran directly from the Google script editor, so I should build out a web interface for it instead
-  //ContentService.createTextOutput(zip.getDataAsString()).downloadAsFile("allAttachments.zip");
+  var blobs = getAttachmentsFromStarredThreads();
   
-  var message = saveStarredAttachments();
-  
-  return ContentService.createTextOutput(message);
+  if (blobs.length == 0) {
+    return ContentService.createTextOutput("No attachments.");
+  }
+
+  var zip = Utilities.zip(blobs, "downloadAttachments.zip");
+
+  return ContentService.createTextOutput(zip.getDataAsString()).downloadAsFile("allAttachments.zip");  
 }
