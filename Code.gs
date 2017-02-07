@@ -1,3 +1,18 @@
+function saveStarredAttachments() {
+  var blobs = getAttachmentsFromStarredThreads();
+  
+  if (blobs.length == 0) {
+    return "No attachments.";
+  }
+
+  var zip = Utilities.zip(blobs, "downloadAttachments.zip");
+  DriveApp.addFile(DriveApp.createFile(zip));
+  
+  return "Successfully saved attachments of starred images to your Google Drive.";
+}
+
+
+// returns a blob[]
 function getAttachmentsFromStarredThreads() {
   // max 10 threads
   var blobs = [];
@@ -25,13 +40,5 @@ function getAttachmentsFromStarredThreads() {
 }
 
 function doGet(e) { 
-  var blobs = getAttachmentsFromStarredThreads();
-  
-  if (blobs.length == 0) {
-    return ContentService.createTextOutput("No attachments.");
-  }
-
-  var zip = Utilities.zip(blobs, "downloadAttachments.zip");
-
-  return ContentService.createTextOutput(zip.getDataAsString()).downloadAsFile("allAttachments.zip");  
+  return ContentService.createTextOutput(saveStarredAttachments());
 }
